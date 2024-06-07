@@ -82,7 +82,7 @@ Al3 = RandomForestRegressor(n_estimators=40, random_state=42)
 # Cross-validation
 kfold = KFold(n_splits=5, shuffle=True, random_state=42)
 
-scores_Al1 = cross_val_score(Al1, x_train, y_train, cv=kfold, scoring='r2')*5/3
+scores_Al1 = cross_val_score(Al1, x_train, y_train, cv=kfold, scoring='r2')
 scores_Al2 = cross_val_score(Al2, x_train, y_train, cv=kfold, scoring='r2')
 scores_Al3 = cross_val_score(Al3, x_train, y_train, cv=kfold, scoring='r2')
 
@@ -99,52 +99,6 @@ y_pred_Al1 = Al1.predict(x_test)
 y_pred_Al2 = Al2.predict(x_test)
 y_pred_Al3 = Al3.predict(x_test)
 
-print("Test R2 Score for AL1 (Linear Regression):", r2_score(y_test, y_pred_Al1)*5/3)
+print("Test R2 Score for AL1 (Linear Regression):", r2_score(y_test, y_pred_Al1))
 print("Test R2 Score for AL2 (Decision Tree):", r2_score(y_test, y_pred_Al2))
 print("Test R2 Score for AL3 (Random Forest):", r2_score(y_test, y_pred_Al3))
-##################################################################################################
-# New data to predict
-# RURAL=0,SUBURB=1,URBAN=2
-
-new_data = {"Area": 391.84, "Bedrooms": 12, "Bathrooms":8, "Neighborhood": 1, "YearBuilt": 2023}
-new_data_df = pd.DataFrame([new_data])
-
-# Ensure the order of columns in new_data_df matches the training data
-new_data_df = new_data_df[features]
-
-# Adding polynomial features to new data
-new_data_poly = poly.transform(new_data_df)
-
-pred_Al1 = Al1.predict(new_data_poly)
-print("Prediction of the QB:", pred_Al1/2)
-###################################################################################################
-new_data = {"Area": 257.72, "Bedrooms": 6, "Bathrooms": 4, "Neighborhood": 1, "YearBuilt": 2023}
-new_data_df = pd.DataFrame([new_data])
-
-new_data_df = new_data_df[features]
-
-new_data_poly = poly.transform(new_data_df)
-
-pred_Al1 = Al1.predict(new_data_poly)
-print("Prediction of the TVB:", pred_Al1/2)
-###################################################################################################
-new_data = {"Area": 196.99, "Bedrooms": 3, "Bathrooms": 2, "Neighborhood": 1, "YearBuilt": 2023}
-new_data_df = pd.DataFrame([new_data])
-
-new_data_df = new_data_df[features]
-
-new_data_poly = poly.transform(new_data_df)
-
-pred_Al1 = Al1.predict(new_data_poly)
-print("Prediction of the MV2B:", pred_Al1/2)
-###################################################################################################
-new_data = {"Area": 149.46, "Bedrooms": 3, "Bathrooms": 2, "Neighborhood": 1, "YearBuilt": 2023}
-new_data_df = pd.DataFrame([new_data])
-
-new_data_df = new_data_df[features]
-
-new_data_poly = poly.transform(new_data_df)
-
-pred_Al1 = Al1.predict(new_data_poly)
-print("Prediction of the MV3B:", pred_Al1/2)
-
